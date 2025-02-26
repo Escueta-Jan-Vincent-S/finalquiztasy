@@ -104,7 +104,7 @@ class FinalQuiztasy:
         ]
 
         self.back_button = Button(50, 50, os.path.join('images', 'button', 'back_btn.png'),
-                    os.path.join('images', 'button', 'back_btn_hover.png'), self.go_back, scale=0.15
+                    os.path.join('images', 'button', 'back_btn_hover.png'), self.go_back, scale=0.16
         )
 
     def show_menu(self):
