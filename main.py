@@ -187,6 +187,8 @@ class FinalQuiztasy:
         pygame.mixer.music.stop()
         pygame.quit()
 
+    # Hello
+
 if __name__ == "__main__":
     game = FinalQuiztasy()
     game.main()
