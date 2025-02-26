@@ -83,7 +83,6 @@ class FinalQuiztasy:
     def __init__(self):
         self.screen = screen
         self.click_sound = pygame.mixer.Sound(os.path.join('audio', 'click_sound_button.mp3'))  # Load the click sound
-
         self.main_buttons = [
             Button(610, 450, os.path.join('images', 'button', 'play_btn.png'),
                    os.path.join('images', 'button', 'play_btn_hover.png'), self.show_game_modes, scale=0.35),
@@ -104,17 +103,18 @@ class FinalQuiztasy:
                    os.path.join('images', 'button', 'custom_btn_hover.png'), self.custom_mode, scale=0.70)
         ]
 
-        """
-        self.back_button = [
-            Button(300, 300, os.path.join('images', 'button', 'back_btn.png'), os.path.join('images', 'button', 'back_btn_hover.png'), self.back_button, scale=0.50),
-        ]
-        """
+        self.back_button = Button(50, 50, os.path.join('images', 'button', 'back_btn.png'),
+                    os.path.join('images', 'button', 'back_btn_hover.png'), self.go_back, scale=0.15
+        )
 
     def show_menu(self):
-        pygame.mixer.music.load(os.path.join('audio', 'menuOst.mp3'))
-        pygame.mixer.music.play(-1)
+        if not pygame.mixer.music.get_busy():
+            pygame.mixer.music.load(os.path.join('audio', 'menuOst.mp3'))
+            pygame.mixer.music.play(-1)
+
         self.set_main_buttons_visibility(True)
         self.set_game_mode_buttons_visibility(False)
+        self.back_button.visible = False
 
     def set_main_buttons_visibility(self, visible):
         for button in self.main_buttons:
@@ -127,6 +127,7 @@ class FinalQuiztasy:
     def show_game_modes(self):
         self.set_main_buttons_visibility(False)
         self.set_game_mode_buttons_visibility(True)
+        self.back_button.visible = True
         self.click_sound.play()
 
     def play_game(self):
@@ -158,14 +159,19 @@ class FinalQuiztasy:
         print("Custom Mode Selected")
         self.click_sound.play()
 
+    def go_back(self):
+        print("Back Button Clicked")
+        self.click_sound.play()
+        self.show_menu()
+
     def update(self):
-        for button in self.main_buttons + self.game_mode_buttons:
+        for button in self.main_buttons + self.game_mode_buttons + [self.back_button]:
             button.update()
             button.draw(self.screen)
 
     def check_events(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
-            for button in self.main_buttons + self.game_mode_buttons:
+            for button in self.main_buttons + self.game_mode_buttons + [self.back_button]:
                 button.check_click()
 
     def main(self):
@@ -186,8 +192,6 @@ class FinalQuiztasy:
         background_video.close()
         pygame.mixer.music.stop()
         pygame.quit()
-
-    # Hello
 
 if __name__ == "__main__":
     game = FinalQuiztasy()
