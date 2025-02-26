@@ -1,0 +1,46 @@
+import pygame as py
+import pygame
+import random
+
+WIDTH, HEIGHT = 1280, 720
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+py.display.set_caption("Final Quiztasy")
+
+start_img = pygame.image.load('images/start_btn.jpg').convert_alpha()
+exit_img = pygame.image.load('images/exit_btn.jpg').convert_alpha()
+
+BG = pygame.transform.scale(pygame.image.load('images/background.jpg'), (WIDTH, HEIGHT))
+
+class Button():
+    def __init__(self, screen, x, y, image):
+        self.image = image
+        self.rect = image.get_rect()
+        self.rect.topleft = (x, y)
+
+    def draw(self):
+        screen.blit(self.image, (self.rect.x, self.rect.y))
+
+start_button = Button(100, 200, start_img)
+exit_button = Button(100, 200, exit_img)
+
+def menuBackground():
+    WIN.blit(BG, (0, 0))
+    pygame.display.update()
+
+def main():
+    run = True
+    while run:
+
+        menuBackground()
+        start_button.draw()
+        exit_button.draw()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                break
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
